@@ -11,6 +11,7 @@
     "tauri:serve": "vue-cli-service tauri:serve"
   },
   "dependencies": {
+    "bulma": "^0.9.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
@@ -30,6 +31,8 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "lint-staged": "^9.5.0",
+    "pug": "^3.0.0",
+    "pug-plain-loader": "^1.0.0",
     "vue-cli-plugin-tauri": "~0.9.0",
     "vue-template-compiler": "^2.6.11"
   },
