@@ -8,11 +8,13 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "tauri:build": "vue-cli-service tauri:build",
-    "tauri:serve": "vue-cli-service tauri:serve"
+    "tauri:serve": "vue-cli-service tauri:serve",
+    "tauri": "tauri"
   },
   "dependencies": {
     "bulma": "^0.9.0",
     "core-js": "^3.6.5",
+    "tauri": "^0.10.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
@@ -36,7 +38,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^9.0.2",
     "vue-cli-plugin-pug": "~1.0.7",
-    "vue-cli-plugin-tauri": "~0.9.0",
+    "vue-cli-plugin-tauri": "^0.10.0",
     "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {

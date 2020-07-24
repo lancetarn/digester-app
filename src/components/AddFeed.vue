@@ -1,9 +1,32 @@
 <template lang="pug">
-  button.button.is-primary Add Feed
+  .AddFeed
+    .field
+      label.label Feed Name
+       input.input(type="text" v-model='name')
+    .field
+      label.label Address
+       input.input(type="text" v-model='address')
+    button.button.is-primary(@click='saveFeed') Add Feed
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
+function saveFeed() {
+  this.addFeed({ newFeed: this.newFeed });
+}
+
 export default {
   name: 'AddFeed',
+  data: () => ({ name: '', address: '' }),
+  methods: {
+    saveFeed,
+    ...mapActions(['addFeed']),
+  },
+  computed: {
+    newFeed() {
+      return { name: this.name, address: this.address };
+    },
+  },
 };
 </script>
