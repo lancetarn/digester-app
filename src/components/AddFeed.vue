@@ -1,12 +1,20 @@
 <template lang="pug">
   .AddFeed
-    .field
-      label.label Feed Name
-       input.input(type="text" v-model='name')
-    .field
-      label.label Address
-       input.input(type="text" v-model='address')
-    button.button.is-primary(@click='saveFeed') Add Feed
+    button.button.is-info(
+      v-if="mode === 'closed'"
+      @click="mode = 'modal'"
+    ) + Feed
+    div.modal(:class="modalClass")
+      .modal-background(@click="mode = 'closed'")
+      .modal-content
+        .card
+          .field
+            label.label Feed Name
+             input.input(type="text" v-model='name')
+          .field
+            label.label Address
+             input.input(type="text" v-model='address')
+        button.button.is-primary(@click='saveFeed') Add Feed
 </template>
 
 <script>
@@ -15,16 +23,20 @@ import feeds from '@/services/feeds';
 
 function saveFeed() {
   this.addFeed({ newFeed: this.newFeed });
+  this.mode = 'closed';
 }
 
 export default {
   name: 'AddFeed',
-  data: () => ({ name: '', address: '' }),
+  data: () => ({ mode: 'closed', name: '', address: '' }),
   methods: {
     saveFeed,
     ...mapActions(['addFeed']),
   },
   computed: {
+    modalClass() {
+      return this.mode === 'modal' ? 'is-active' : '';
+    },
     newFeed() {
       return feeds.makeFeed(this.name, this.address);
     },
