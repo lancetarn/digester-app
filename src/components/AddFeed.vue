@@ -11,6 +11,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import feeds from '@/services/feeds';
 
 function saveFeed() {
   this.addFeed({ newFeed: this.newFeed });
@@ -25,7 +26,7 @@ export default {
   },
   computed: {
     newFeed() {
-      return { name: this.name, address: this.address };
+      return feeds.makeFeed(this.name, this.address);
     },
   },
 };
