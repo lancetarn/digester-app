@@ -1,18 +1,25 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  .home
+    add-feed
+    feed-list
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import { mapActions } from 'vuex';
+import AddFeed from '@/components/AddFeed.vue';
+import FeedList from '@/components/FeedList.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    AddFeed,
+    FeedList,
+  },
+  mounted() {
+    return this.loadData();
+  },
+  methods: {
+    ...mapActions(['loadData']),
   },
 };
 </script>

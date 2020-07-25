@@ -8,10 +8,14 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "tauri:build": "vue-cli-service tauri:build",
-    "tauri:serve": "vue-cli-service tauri:serve"
+    "tauri:serve": "vue-cli-service tauri:serve",
+    "tauri": "tauri"
   },
   "dependencies": {
+    "blueimp-md5": "^2.16.0",
+    "bulma": "^0.9.0",
     "core-js": "^3.6.5",
+    "tauri": "^0.10.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
@@ -30,7 +34,12 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "lint-staged": "^9.5.0",
-    "vue-cli-plugin-tauri": "~0.9.0",
+    "node-sass": "^4.14.1",
+    "pug": "^3.0.0",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^9.0.2",
+    "vue-cli-plugin-pug": "~1.0.7",
+    "vue-cli-plugin-tauri": "^0.10.0",
     "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {
