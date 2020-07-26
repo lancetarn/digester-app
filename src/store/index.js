@@ -38,24 +38,31 @@ async function saveStore(store) {
 export default new Vuex.Store({
   state: {
     feeds: [],
+    items: [],
   },
   mutations: {
-    addFeed({ feeds }, newFeed) {
-      feeds.push(newFeed);
-    },
-    // Wholesale set the feeds as
     setFeeds(state, { feeds }) {
       state.feeds = feeds;
     },
+    setItems(state, { items }) {
+      state.items = items;
+    },
   },
   actions: {
-    async addFeed({ state, commit }, { newFeed }) {
-      commit('addFeed', newFeed);
+    addFeed({ state, commit }, { newFeed }) {
+      const feeds = [newFeed, ...state.feeds];
+      commit('setFeeds', feeds);
       saveStore(state);
     },
-    async deleteFeed({ state, commit }, feed) {
+    deleteFeed({ state, commit }, feed) {
       const feeds = state.feeds.filter((f) => f.id !== feed.id);
       commit('setFeeds', { feeds });
+      saveStore(state);
+    },
+    addItems({ state, commit }, newItems) {
+      console.log(state.items);
+      const items = [...newItems, ...state.items];
+      commit('setItems', items);
       saveStore(state);
     },
     async loadData({ commit }) {
@@ -71,6 +78,8 @@ export default new Vuex.Store({
       const data = JSON.parse(raw);
       const feeds = data.feeds || [];
       commit('setFeeds', { feeds });
+      const items = data.items || [];
+      commit('setItems', { items });
     },
   },
   modules: {

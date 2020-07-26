@@ -1,7 +1,15 @@
 <template lang="pug">
   .home
-    add-feed
-    feed-list
+    .level
+      p.is-title.is-size-3 Lentil
+      add-feed
+    .columns
+      .column.is-4
+        feed-list
+      .column.is-8
+          p One article
+          p Another
+          p Third thing
 </template>
 
 <script>

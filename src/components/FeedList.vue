@@ -1,15 +1,17 @@
 <template lang="pug">
   .FeedList
-    h2 Feeds
-    div.card(v-for="f in feeds" :key="f.id")
-      .card-content
-        a.delete.is-pulled-right(@click="deleteFeed(f)")
-        p.title {{ f.name }}
-        p.subtitle {{ f.address }}
+    p Feeds
+    a(v-for="f in feeds" :key="f.id" @click.prevent="fetchItems(f)")
+      div.card
+        .card-content
+          a.delete.is-pulled-right(@click="deleteFeed(f)")
+          p.is-size-5 {{ f.name }}
+          p.is-size-6 {{ f.address }}
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import feeds from '@/services/feeds';
 
 export default {
   name: 'FeedList',
@@ -17,7 +19,12 @@ export default {
     ...mapState(['feeds']),
   },
   methods: {
-    ...mapActions(['deleteFeed']),
+    async fetchItems(f) {
+      const items = await feeds.fetchItems(f);
+      console.log(items);
+      this.addItems(items);
+    },
+    ...mapActions(['deleteFeed', 'addItems']),
   },
 };
 </script>
