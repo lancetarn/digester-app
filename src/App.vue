@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <section class="section" id="app">
     <router-view/>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" src="./assets/main.scss"></style>
