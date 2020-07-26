@@ -53,6 +53,11 @@ export default new Vuex.Store({
       commit('addFeed', newFeed);
       saveStore(state);
     },
+    async deleteFeed({ state, commit }, feed) {
+      const feeds = state.feeds.filter((f) => f.id !== feed.id);
+      commit('setFeeds', { feeds });
+      saveStore(state);
+    },
     async loadData({ commit }) {
       let raw = {};
       try {

@@ -7,14 +7,14 @@
     div.modal(:class="modalClass")
       .modal-background(@click="mode = 'closed'")
       .modal-content
-        .card
+        .box
           .field
             label.label Feed Name
-             input.input(type="text" v-model='name')
+            input.input(type="text" v-model='name')
           .field
             label.label Address
-             input.input(type="text" v-model='address')
-        button.button.is-primary(@click='saveFeed') Add Feed
+            input.input(type="text" v-model='address')
+          button.button.is-primary(@click='saveFeed') Add Feed
 </template>
 
 <script>
@@ -23,6 +23,8 @@ import feeds from '@/services/feeds';
 
 function saveFeed() {
   this.addFeed({ newFeed: this.newFeed });
+  this.name = '';
+  this.address = '';
   this.mode = 'closed';
 }
 
