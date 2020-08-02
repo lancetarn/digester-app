@@ -12,8 +12,7 @@ function makeFeed(name, address) {
 }
 
 function feedItemFromNode(xmlNode) {
-  return {
-    id: md5(`${xmlNode.description}|${xmlNode.pubDate}|${xmlNode.content}`),
+  const item = {
     title: xmlNode.getElementsByTagName('title')[0].textContent,
     description: xmlNode.getElementsByTagName('description')[0].textContent,
     content: xmlNode.getElementsByTagName('content')[0]?.textContent,
@@ -21,6 +20,8 @@ function feedItemFromNode(xmlNode) {
     link: xmlNode.getElementsByTagName('link')[0].nodeValue,
     dismissed: false,
   };
+  item.id = md5(`${item.title}|${item.description}|${item.pubDate}`);
+  return item;
 }
 
 async function fetchItems(feed) {

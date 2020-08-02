@@ -30,22 +30,42 @@ function dataPath(...parts) {
  */
 async function saveStore(store) {
   await createDir(dataDir, { dir: Dir.Data, recursive: true });
-  const f = { path: dataPath(storeFile), contents: JSON.stringify(store) };
+  const contents = JSON.stringify(store);
+  const f = { path: dataPath(storeFile), contents };
   console.log(`Writing ${f.path}`);
   await writeFile(f, { dir: Dir.Data });
+}
+
+function mapIds(records) {
+  const ids = {};
+  records.forEach((e) => { ids[e.id] = true; });
+  return ids;
 }
 
 export default new Vuex.Store({
   state: {
     feeds: [],
     items: [],
+    dismissed: [],
+  },
+  getters: {
+    existingItemIds({ items }) {
+      return mapIds(items);
+    },
+    alreadyDismissed({ dismissed }) {
+      return mapIds(dismissed);
+    },
   },
   mutations: {
     setFeeds(state, { feeds }) {
       state.feeds = feeds;
     },
     setItems(state, { items }) {
+      console.log('setting items', items);
       state.items = items;
+    },
+    setDismissed(state, { dismissed }) {
+      state.dismissed = dismissed;
     },
   },
   actions: {
@@ -59,10 +79,25 @@ export default new Vuex.Store({
       commit('setFeeds', { feeds });
       saveStore(state);
     },
-    addItems({ state, commit }, newItems) {
-      console.log(state.items);
-      const items = [...newItems, ...state.items];
-      commit('setItems', items);
+    addItems({ state, commit, getters }, newItems) {
+      const items = [
+        ...state.items,
+        ...newItems
+          .filter((i) => !getters.existingItemIds[i.id])
+          .filter((i) => !getters.alreadyDismissedIds[i.id]),
+      ];
+      commit('setItems', { items });
+      saveStore(state);
+    },
+    dismissItem({ state, commit, getters }, item) {
+      const items = state.items.filter((i) => (i.id !== item.id));
+      commit('setItems', { items });
+      console.log('Is dismissed?', getters.alreadyDismissed[item.id]);
+      const dismissed = [
+        ...state.dismissed,
+        ...[item].filter((i) => !getters.alreadyDismissed[i.id]),
+      ];
+      commit('setDismissed', { dismissed });
       saveStore(state);
     },
     async loadData({ commit }) {
@@ -80,6 +115,8 @@ export default new Vuex.Store({
       commit('setFeeds', { feeds });
       const items = data.items || [];
       commit('setItems', { items });
+      const dismissed = data.dismissed || [];
+      commit('setDismissed', { dismissed });
     },
   },
   modules: {
