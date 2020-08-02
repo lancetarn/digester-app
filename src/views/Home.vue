@@ -7,21 +7,21 @@
       .column.is-4
         feed-list
       .column.is-8
-          p One article
-          p Another
-          p Third thing
+         feed-item-list
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import AddFeed from '@/components/AddFeed.vue';
 import FeedList from '@/components/FeedList.vue';
+import FeedItemList from '@/components/FeedItemList.vue';
 
 export default {
   name: 'Home',
   components: {
     AddFeed,
     FeedList,
+    FeedItemList,
   },
   mounted() {
     return this.loadData();
