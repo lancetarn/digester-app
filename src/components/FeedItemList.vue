@@ -1,7 +1,7 @@
 <template lang="pug">
   .FeedItemList
     p Items
-    div.card(v-for="i in items" :key="i.id")
+    div.card(v-for="i in newItems" :key="i.id")
       .card-content
         a.delete.is-pulled-right(@click="dismissItem(i)")
         p.is-size-6 {{ i.title }}
@@ -9,11 +9,12 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'FeedItemList',
   computed: {
+    ...mapGetters(['newItems']),
     ...mapState(['items']),
   },
   methods: {

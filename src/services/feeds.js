@@ -2,6 +2,11 @@ import md5 from 'blueimp-md5';
 // import moment from 'moment';
 import http from 'tauri/api/http';
 
+const ItemStatus = {
+  new: 1,
+  dismissed: 2,
+};
+
 function makeFeed(name, address) {
   return {
     name,
@@ -19,6 +24,7 @@ function feedItemFromNode(xmlNode) {
     pubDate: xmlNode.getElementsByTagName('pubDate')[0].textContent,
     link: xmlNode.getElementsByTagName('link')[0].nodeValue,
     dismissed: false,
+    status: ItemStatus.new,
   };
   item.id = md5(`${item.title}|${item.description}|${item.pubDate}`);
   return item;
@@ -36,6 +42,7 @@ async function fetchItems(feed) {
 }
 
 export default {
+  ItemStatus,
   fetchItems,
   makeFeed,
 };
