@@ -12,45 +12,43 @@
           @click="tab = 'dismissed'"
         )
           a Dismissed
-    .card(v-for="i in displayItems" :key="i.id")
-      .card-content
-        a.delete.is-pulled-right(@click="handleDelete(i)")
-        p.is-size-6 {{ i.title }}
-        p.is-size-7 {{ i.pubDate }}
+    component(
+      v-for="i in displayItems"
+      :key="i.id"
+      :is="componentMap[i.status]"
+      :item="i"
+    )
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
+import DismissedItem from './DismissedItem.vue';
+import NewItem from './NewItem.vue';
+import feedlib from '../services/feeds';
 
 function displayItems() {
   const display = this.tab === 'pending' ? this.newItems : this.dismissedItems;
   return display.slice().sort((a, b) => a.pubDate - b.pubdate);
 }
 
-function handleDelete(item) {
-  switch (this.tab) {
-    case 'pending':
-      this.dismissItem(item);
-      break;
-    case 'dismissed':
-      this.deleteItem(item);
-      break;
-    default:
-      throw new Error('Invalid tab state');
-  }
-}
-
 export default {
   name: 'FeedItemList',
-  data: () => ({ tab: 'pending' }),
+  data() {
+    return {
+      tab: 'pending',
+      componentMap: {
+        [feedlib.ItemStatus.new]: NewItem,
+        [feedlib.ItemStatus.dismissed]: DismissedItem,
+      },
+    };
+  },
   computed: {
     displayItems,
     ...mapGetters(['newItems', 'dismissedItems']),
-    ...mapState(['items']),
   },
-  methods: {
-    handleDelete,
-    ...mapActions(['deleteFeed', 'addItems', 'dismissItem', 'deleteItem']),
+  components: {
+    DismissedItem,
+    NewItem,
   },
 };
 </script>

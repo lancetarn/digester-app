@@ -34,7 +34,7 @@ async function saveStore(store) {
   const contents = JSON.stringify(store);
   const f = { path: dataPath(storeFile), contents };
   console.log(`Writing ${f.path}`);
-  await writeFile(f, { dir: Dir.Data });
+  return writeFile(f, { dir: Dir.Data });
 }
 
 function mapIds(records) {
@@ -111,6 +111,7 @@ export default new Vuex.Store({
     deleteItem({ state, commit }, item) {
       const items = state.items.filter((i) => i.id !== item.id);
       commit('setItems', { items });
+      saveStore(state);
     },
     async loadData({ commit }) {
       console.log('Loading data...');
