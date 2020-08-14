@@ -108,6 +108,10 @@ export default new Vuex.Store({
       commit('dismissItem', { id: item.id });
       saveStore(state);
     },
+    deleteItem({ state, commit }, item) {
+      const items = state.items.filter((i) => i.id !== item.id);
+      commit('setItems', { items });
+    },
     async loadData({ commit }) {
       console.log('Loading data...');
       let raw = {};

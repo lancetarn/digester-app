@@ -33,7 +33,7 @@ function handleDelete(item) {
       this.dismissItem(item);
       break;
     case 'dismissed':
-      console.log('Deleting', item);
+      this.deleteItem(item);
       break;
     default:
       throw new Error('Invalid tab state');
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     handleDelete,
-    ...mapActions(['deleteFeed', 'addItems', 'dismissItem']),
+    ...mapActions(['deleteFeed', 'addItems', 'dismissItem', 'deleteItem']),
   },
 };
 </script>
