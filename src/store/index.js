@@ -4,7 +4,7 @@ import {
   Dir, createDir, readTextFile, writeFile,
 } from 'tauri/api/fs';
 
-import foo from '@/services/feeds';
+import feedLib from '@/services/feeds';
 
 Vue.use(Vuex);
 
@@ -59,8 +59,17 @@ export default new Vuex.Store({
     existingItemIds({ items }) {
       return mapIds(items);
     },
+    /**
+     * Provide only undismissed items.
+     *
+     * @param {Array<FeedItem>} items - The raw items in the state
+     * @return {Array<FeedItem>}
+     */
     newItems({ items }) {
-      return items.filter((i) => i.status === foo.ItemStatus.new);
+      return items.filter((i) => i.status === feedLib.ItemStatus.new);
+    },
+    dismissedItems({ items }) {
+      return items.filter((i) => i.status === feedLib.ItemStatus.dismissed);
     },
   },
   mutations: {
@@ -68,13 +77,11 @@ export default new Vuex.Store({
       state.feeds = feeds;
     },
     setItems(state, { items }) {
-      console.log('setting items', items);
       state.items = items;
     },
     dismissItem({ items }, { id }) {
       const item = getById(items, id);
-      console.log(item);
-      item.status = foo.ItemStatus.dismissed;
+      item.status = feedLib.ItemStatus.dismissed;
     },
   },
   actions: {
@@ -102,6 +109,7 @@ export default new Vuex.Store({
       saveStore(state);
     },
     async loadData({ commit }) {
+      console.log('Loading data...');
       let raw = {};
       try {
         raw = await readTextFile(dataPath(storeFile), { dir: Dir.Data });
@@ -114,7 +122,8 @@ export default new Vuex.Store({
       const data = JSON.parse(raw);
       const feeds = data.feeds || [];
       commit('setFeeds', { feeds });
-      const items = data.items || [];
+      const rawItems = data.items || [];
+      const items = rawItems.map((i) => new feedLib.FeedItem(i));
       commit('setItems', { items });
     },
   },

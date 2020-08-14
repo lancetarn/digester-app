@@ -7,7 +7,7 @@
       .column.is-4
         feed-list
       .column.is-8
-         feed-item-list
+        feed-item-list
 </template>
 
 <script>

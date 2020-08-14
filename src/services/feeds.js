@@ -2,6 +2,31 @@ import md5 from 'blueimp-md5';
 // import moment from 'moment';
 import http from 'tauri/api/http';
 
+class FeedItem {
+  constructor({
+    title,
+    description,
+    content,
+    pubDate,
+    link,
+    status,
+  }) {
+    if (!(title && description && pubDate)) {
+      console.error({
+        title, description, content, pubDate, link, status,
+      });
+      throw new Error('Invalid FeedItem');
+    }
+    this.title = title;
+    this.description = description;
+    this.content = content;
+    this.pubDate = new Date(pubDate);
+    this.link = link;
+    this.status = status;
+    this.id = md5(`${title}|${description}|${pubDate}`);
+  }
+}
+
 const ItemStatus = {
   new: 1,
   dismissed: 2,
@@ -23,7 +48,6 @@ function feedItemFromNode(xmlNode) {
     content: xmlNode.getElementsByTagName('content')[0]?.textContent,
     pubDate: xmlNode.getElementsByTagName('pubDate')[0].textContent,
     link: xmlNode.getElementsByTagName('link')[0].nodeValue,
-    dismissed: false,
     status: ItemStatus.new,
   };
   item.id = md5(`${item.title}|${item.description}|${item.pubDate}`);
@@ -42,6 +66,7 @@ async function fetchItems(feed) {
 }
 
 export default {
+  FeedItem,
   ItemStatus,
   fetchItems,
   makeFeed,
