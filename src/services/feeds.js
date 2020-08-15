@@ -10,6 +10,8 @@ class FeedItem {
     pubDate,
     link,
     status,
+    feedId,
+    feedName,
   }) {
     if (!(title && description && pubDate)) {
       console.error({
@@ -24,6 +26,8 @@ class FeedItem {
     this.link = link;
     this.status = status;
     this.id = md5(`${title}|${description}|${pubDate}`);
+    this.feedId = feedId;
+    this.feedName = feedName;
   }
 }
 
@@ -42,12 +46,14 @@ function makeFeed(name, address) {
 }
 
 function feedItemFromNode(xmlNode) {
+  console.log(xmlNode);
+  console.log(xmlNode.getElementsByTagName('link')[0]);
   const item = {
     title: xmlNode.getElementsByTagName('title')[0].textContent,
     description: xmlNode.getElementsByTagName('description')[0].textContent,
     content: xmlNode.getElementsByTagName('content')[0]?.textContent,
     pubDate: xmlNode.getElementsByTagName('pubDate')[0].textContent,
-    link: xmlNode.getElementsByTagName('link')[0].nodeValue,
+    link: xmlNode.getElementsByTagName('link')[0].textContent,
     status: ItemStatus.new,
   };
   item.id = md5(`${item.title}|${item.description}|${item.pubDate}`);
@@ -62,7 +68,7 @@ async function fetchItems(feed) {
   const items = xml.getElementsByTagName('item');
   return [...items]
     .map(feedItemFromNode)
-    .map((f) => ({ feedId: feed.id, feedName: feed.name, ...f }));
+    .map((f) => (new FeedItem({ feedId: feed.id, feedName: feed.name, ...f })));
 }
 
 export default {

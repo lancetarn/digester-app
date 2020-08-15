@@ -21,7 +21,6 @@ export default {
   methods: {
     async fetchItems(f) {
       const items = await feeds.fetchItems(f);
-      console.log(items);
       this.addItems(items);
     },
     ...mapActions(['deleteFeed', 'addItems']),

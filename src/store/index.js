@@ -87,7 +87,8 @@ export default new Vuex.Store({
   actions: {
     addFeed({ state, commit }, { newFeed }) {
       const feeds = [newFeed, ...state.feeds];
-      commit('setFeeds', feeds);
+      console.log('Feeds', feeds);
+      commit('setFeeds', { feeds });
       saveStore(state);
     },
     deleteFeed({ state, commit }, feed) {

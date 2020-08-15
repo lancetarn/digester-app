@@ -2,7 +2,8 @@
   .card
     .card-content
       a.delete.is-pulled-right(@click="dismissItem(item)")
-      p.is-size-6 {{ item.title }}
+      a(:href="item.link" target="_blank")
+        span.is-size-6 {{ item.title }}
       p.is-size-7 {{ item.pubDate }}
 </template>
 
@@ -14,7 +15,7 @@ export default {
   name: 'NewItem',
   props: { item: { type: feedlib.FeedItem, required: true } },
   methods: {
-    ...mapActions(['dsmissItem']),
+    ...mapActions(['dismissItem']),
   },
 };
 </script>
