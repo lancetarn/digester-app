@@ -79,9 +79,10 @@ export default new Vuex.Store({
     setItems(state, { items }) {
       state.items = items;
     },
-    dismissItem({ items }, { id }) {
-      const item = getById(items, id);
-      item.status = feedLib.ItemStatus.dismissed;
+    updateItem({ items }, { updates }) {
+      const existing = getById(items, updates.id);
+      Object.assign(existing, updates);
+      console.log('Updated to:', existing);
     },
   },
   actions: {
@@ -106,12 +107,18 @@ export default new Vuex.Store({
       saveStore(state);
     },
     dismissItem({ state, commit }, item) {
-      commit('dismissItem', { id: item.id });
+      const updates = { id: item.id, status: feedLib.ItemStatus.dismissed };
+      commit('updateItem', { updates });
       saveStore(state);
     },
     deleteItem({ state, commit }, item) {
       const items = state.items.filter((i) => i.id !== item.id);
       commit('setItems', { items });
+      saveStore(state);
+    },
+    reinstateItem({ state, commit }, item) {
+      const updates = { id: item.id, status: feedLib.ItemStatus.new };
+      commit('updateItem', { updates });
       saveStore(state);
     },
     async loadData({ commit }) {
