@@ -1,5 +1,9 @@
 {
   "ctx": {},
+  "build": {
+    "devPath": "http://localhos:8080",
+    "distDir": "../dist"
+  },
   "tauri": {
     "embeddedServer": {
       "active": true

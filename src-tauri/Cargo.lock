@@ -1143,7 +1143,9 @@ dependencies = [
 
 [[package]]
 name = "tauri"
-version = "0.9.0"
+version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7d7d75c5c553404ae523e2d517d8c23c6e303510e9e46721e0fa70abb260f2db"
 dependencies = [
  "anyhow",
  "base64 0.12.3",
@@ -1170,6 +1172,8 @@ dependencies = [
 [[package]]
 name = "tauri-api"
 version = "0.7.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "06ec51aad866f15a1771c2f1a46aad5a8a372a8a4730f3db469eb4cbcecc8106"
 dependencies = [
  "anyhow",
  "attohttpc",
@@ -1215,6 +1219,8 @@ dependencies = [
 [[package]]
 name = "tauri-utils"
 version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3d8a4b0daeec9b0493cf894a918ba30e6768d6cca1cab757f802a9e78bc0bbfd"
 dependencies = [
  "anyhow",
  "sysinfo",
