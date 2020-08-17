@@ -1,10 +1,16 @@
 <template lang="pug">
-  .card
-    .card-content
-      a(@click="reinstateItem(item)") Recover
-      a.has-text-danger.delete.is-pulled-right(@click="deleteItem(item)")
-      p.is-size-6 {{ item.title }}
-      p.is-size-7 {{ item.pubDate }}
+  div
+    .card
+      .card-content
+        p.is-size-6 {{ item.title }}
+        p.is-size-7 {{ item.pubDate }}
+        .level
+          a.has-text-info(@click="reinstateItem(item)")
+            span.icon
+              i.fas.fa-recycle
+          a.has-text-danger(@click="deleteItem(item)")
+            span.icon
+              i.fas.fa-skull
 </template>
 
 <script>

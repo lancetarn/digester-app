@@ -1,10 +1,13 @@
 <template lang="pug">
   .card
     .card-content
-      a.delete.is-pulled-right(@click="dismissItem(item)")
       a(:href="item.link" target="_blank")
         span.is-size-6 {{ item.title }}
       p.is-size-7 {{ item.pubDate }}
+      .level
+        a.has-text-info(@click="dismissItem(item)")
+          span.icon
+            i.fas.fa-angle-double-right
 </template>
 
 <script>
