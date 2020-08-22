@@ -4,6 +4,7 @@ import http from 'tauri/api/http';
 
 class FeedItem {
   constructor({
+    id,
     title,
     description,
     content,
@@ -25,7 +26,7 @@ class FeedItem {
     this.pubDate = new Date(pubDate);
     this.link = link;
     this.status = status;
-    this.id = md5(`${title}|${description}|${pubDate}`);
+    this.id = id || md5(`${title}|${description}|${pubDate}`);
     this.feedId = feedId;
     this.feedName = feedName;
   }
@@ -42,12 +43,12 @@ function makeFeed(name, address) {
     address,
     id: md5(address),
     lastChecked: null,
+    createdAt: new Date(),
+    status: 'active',
   };
 }
 
 function feedItemFromNode(xmlNode) {
-  console.log(xmlNode);
-  console.log(xmlNode.getElementsByTagName('link')[0]);
   const item = {
     title: xmlNode.getElementsByTagName('title')[0].textContent,
     description: xmlNode.getElementsByTagName('description')[0].textContent,
@@ -56,7 +57,6 @@ function feedItemFromNode(xmlNode) {
     link: xmlNode.getElementsByTagName('link')[0].textContent,
     status: ItemStatus.new,
   };
-  item.id = md5(`${item.title}|${item.description}|${item.pubDate}`);
   return item;
 }
 
