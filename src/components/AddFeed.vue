@@ -4,7 +4,7 @@
       v-if="mode === 'closed'"
       @click="mode = 'modal'"
     ) + Feed
-    div.modal(:class="modalClass")
+    .modal(:class="modalClass")
       .modal-background(@click="mode = 'closed'")
       .modal-content
         .box
