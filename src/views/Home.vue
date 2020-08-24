@@ -1,13 +1,9 @@
 <template lang="pug">
-  .home
-    .level
-      p.is-title.is-size-3 Lentil
-      add-feed
-    .columns
-      .column.is-4
-        feed-list
-      .column.is-8
-        feed-item-list
+  .columns
+    .column.is-4
+      feed-list
+    .column.is-8
+      feed-item-list
 </template>
 
 <script>

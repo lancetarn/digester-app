@@ -1,9 +1,9 @@
 <template lang="pug">
   .AddFeed
-    button.button.is-info(
+    button.button.is-light(
       v-if="mode === 'closed'"
       @click="mode = 'modal'"
-    ) + Feed
+    ) +
     .modal(:class="modalClass")
       .modal-background(@click="mode = 'closed'")
       .modal-content
