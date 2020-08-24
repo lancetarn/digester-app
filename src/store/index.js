@@ -79,10 +79,6 @@ export default new Vuex.Store({
     setItems(state, { items }) {
       state.items = items;
     },
-    updateFeed({ feeds }, { updates }) {
-      const existing = getById(feeds, updates.id);
-      Object.assign(existing, updates);
-    },
     updateItem({ items }, { updates }) {
       const existing = getById(items, updates.id);
       Object.assign(existing, updates);
@@ -98,16 +94,6 @@ export default new Vuex.Store({
     deleteFeed({ state, commit }, feed) {
       const feeds = state.feeds.filter((f) => f.id !== feed.id);
       commit('setFeeds', { feeds });
-      saveStore(state);
-    },
-    deactivateFeed({ state, commit }, feed) {
-      const updates = { id: feed.id, status: 'deleted' };
-      commit('updateFeed', { updates });
-      saveStore(state);
-    },
-    reactivateFeed({ state, commit }, feed) {
-      const updates = { id: feed.id, status: 'active' };
-      commit('updateFeed', { updates });
       saveStore(state);
     },
     addItems({ state, commit, getters }, newItems) {

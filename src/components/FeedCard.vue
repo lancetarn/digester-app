@@ -1,7 +1,7 @@
 <template lang="pug">
   .card
     .card-content
-      a.has-text-info(@click="refresh")
+      a(@click="refresh")
         span.icon
           i.fas.fa-sync-alt(:class="isLoading")
       a.delete.is-pulled-right(@click="confirming = true")
